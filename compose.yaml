@@ -1,0 +1,47 @@
+services:
+  # Creating the database container
+  product-db:
+    image: mysql:8.0
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: products # Database name
+    # Setting the volume
+    volumes:
+      - product-mysql-data:/var/lib/mysql
+    networks:
+      - link-tic-network
+
+    # The healthcheck runs mysqladmin ping every 10 seconds.
+    # When MySQL replies “mysqld is alive,” it is considered healthy
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-p=root123" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  product-app:
+    build:
+      context: ./product-app
+      dockerfile: Dockerfile
+    depends_on:
+      product-db:
+        # The product-app container waits until that is true before starting.
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    environment:
+      DATASOURCE_URL: jdbc:mysql://product-db:3306/products?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DATASOURCE_USER: root
+      DATASOURCE_PASSWORD: root123
+
+    networks:
+      - link-tic-network
+
+volumes:
+  product-mysql-data:
+
+networks:
+  link-tic-network:
+    driver: bridge
