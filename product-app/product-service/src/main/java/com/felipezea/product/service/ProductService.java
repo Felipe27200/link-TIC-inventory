@@ -1,5 +1,6 @@
 package com.felipezea.product.service;
 
+import com.felipezea.api.ProductApiPageResponse;
 import com.felipezea.api.ProductApiResponse;
 import com.felipezea.dto.CreateProductDTO;
 import com.felipezea.dto.ProductDTO;
@@ -10,6 +11,8 @@ import com.felipezea.product.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -87,5 +90,24 @@ public class ProductService
 
                     return new EntityNotFoundException("Product not found with id: " + id);
                 });
+    }
+
+    public ProductApiPageResponse<ProductDTO> findProductsPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        var result = this.productRepository.findAll(pageable);
+
+        var data = result
+                .getContent()
+                .stream()
+                .map(product -> new ProductApiResponse<>(product.getId(), this.modelMapper.map(product, ProductDTO.class)))
+                .toList();
+
+        return new ProductApiPageResponse<>(
+                data,
+                result.getTotalPages(),
+                result.getTotalElements(),
+                result.getSize(),
+                result.getNumber()
+        );
     }
 }

@@ -1,5 +1,6 @@
 package com.felipezea.product.controller;
 
+import com.felipezea.api.ProductApiPageResponse;
 import com.felipezea.api.ProductApiResponse;
 import com.felipezea.dto.CreateProductDTO;
 import com.felipezea.dto.ProductDTO;
@@ -32,6 +33,13 @@ public class ProductController
         var product = productService.updateProduct(id, productDTO);
 
         return ResponseEntity.ok(product);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<ProductApiPageResponse<ProductDTO>> findProductsPage(@RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(this.productService.findProductsPage(page, size));
     }
 
     @GetMapping("/{id}")

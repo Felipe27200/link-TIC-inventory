@@ -1,5 +1,8 @@
 package com.felipezea.api;
 
+import lombok.Data;
+
+@Data
 public class ProductApiResponse<T>
 {
     public Data<T> data;
