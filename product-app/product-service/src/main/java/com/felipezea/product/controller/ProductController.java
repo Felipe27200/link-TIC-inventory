@@ -7,10 +7,7 @@ import com.felipezea.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -23,6 +20,14 @@ public class ProductController
     public ResponseEntity<ProductApiResponse<ProductDTO>> createProduct(@Valid @RequestBody CreateProductDTO productDTO)
     {
         var product = productService.createProduct(productDTO);
+
+        return ResponseEntity.ok(product);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductApiResponse<ProductDTO>> findById(@PathVariable Long id)
+    {
+        var product = productService.findById(id);
 
         return ResponseEntity.ok(product);
     }

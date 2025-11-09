@@ -3,6 +3,7 @@ package com.felipezea.product.service;
 import com.felipezea.api.ProductApiResponse;
 import com.felipezea.dto.CreateProductDTO;
 import com.felipezea.dto.ProductDTO;
+import com.felipezea.exception.EntityNotFoundException;
 import com.felipezea.product.entity.Product;
 import com.felipezea.product.repository.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,22 @@ public class ProductService
         product = this.productRepository.save(product);
 
         log.info("[createProduct] product created: {}", product);
+
+        return new ProductApiResponse<>(product.getId(), this.modelMapper.map(product, ProductDTO.class));
+    }
+
+    public ProductApiResponse<ProductDTO> findById(Long id)
+    {
+        log.debug("[findById] - Search product by id: {}", id);
+
+        var product = this.productRepository.findById(id)
+            .orElseThrow(() -> {
+                log.error("[findById] - Product not found with id: {}", id);
+
+                return new EntityNotFoundException("Product not found with id: " + id);
+            });
+
+        log.debug("[findById] - product found: {}", product);
 
         return new ProductApiResponse<>(product.getId(), this.modelMapper.map(product, ProductDTO.class));
     }
