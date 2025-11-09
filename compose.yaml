@@ -35,6 +35,8 @@ services:
       DATASOURCE_URL: jdbc:mysql://product-db:3306/products?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       DATASOURCE_USER: root
       DATASOURCE_PASSWORD: root123
+      HEADER_NAME: X-API-KEY
+      API_TOKEN: 1234
 
     networks:
       - link-tic-network

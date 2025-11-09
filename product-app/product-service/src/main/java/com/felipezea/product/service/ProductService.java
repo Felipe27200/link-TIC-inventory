@@ -53,11 +53,15 @@ public class ProductService
         if (checkName != null && !checkName.getId().equals(oldProduct.getId()))
             throw new EntityDuplicateException("Product with name " + createProductDTO.getName() + " already exists");
 
-        product = this.productRepository.save(product);
+        oldProduct.setName(product.getName());
+        oldProduct.setDescription(product.getDescription());
+        oldProduct.setPrice(product.getPrice());
 
-        log.info("[updateProduct] product updated: {}", product);
+        oldProduct = this.productRepository.save(oldProduct);
 
-        return new ProductApiResponse<>(product.getId(), this.modelMapper.map(product, ProductDTO.class));
+        log.info("[updateProduct] product updated: {}", oldProduct);
+
+        return new ProductApiResponse<>(oldProduct.getId(), this.modelMapper.map(product, ProductDTO.class));
     }
 
     public ProductApiResponse<ProductDTO> findById(Long id)
