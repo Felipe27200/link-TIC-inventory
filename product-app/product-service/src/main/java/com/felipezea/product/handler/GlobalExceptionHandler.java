@@ -41,14 +41,14 @@ public class GlobalExceptionHandler
         final Map<String, Object> error = Map
                 .of("errors",
                         List.of(Map.of(
-                                "status", "404",
-                                "title", "Not Found",
+                                "status", "400",
+                                "title", "Duplicate value",
                                 "detail", ex.getMessage() != null ? ex.getMessage() : "The entity was already created"
                         )));
 
         log.error("[EntityDuplicateException] exception: {}", ex.getMessage(), ex);
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(TypeMismatchException.class)

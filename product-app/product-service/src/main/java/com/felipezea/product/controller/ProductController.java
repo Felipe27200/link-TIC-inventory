@@ -24,6 +24,14 @@ public class ProductController
         return ResponseEntity.ok(product);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductApiResponse<ProductDTO>> updateProduct(@PathVariable Long id, @Valid @RequestBody CreateProductDTO productDTO)
+    {
+        var product = productService.updateProduct(id, productDTO);
+
+        return ResponseEntity.ok(product);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ProductApiResponse<ProductDTO>> findById(@PathVariable Long id)
     {
