@@ -68,6 +68,17 @@ public class ProductService
         return new ProductApiResponse<>(product.getId(), this.modelMapper.map(product, ProductDTO.class));
     }
 
+    public String deleteById(Long id)
+    {
+        var product = this.findEntityById(id);
+
+        this.productRepository.delete(product);
+
+        log.info("[deleteById] - product deleted: {}", product);
+
+        return "Product with id " + id + " was deleted";
+    }
+
     private Product findEntityById(Long id)
     {
         return this.productRepository.findById(id)

@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "${apiPrefix}/products")
@@ -38,5 +40,12 @@ public class ProductController
         var product = productService.findById(id);
 
         return ResponseEntity.ok(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> deleteById(@PathVariable Long id) {
+        var response = Map.of("message",  productService.deleteById(id));
+
+        return ResponseEntity.ok(response);
     }
 }
