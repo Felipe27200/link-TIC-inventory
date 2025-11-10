@@ -5,6 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { Router, RouterLink } from '@angular/router';
+import { Product } from '../../interface/Product';
 
 @Component({
   selector: 'app-product-form',
@@ -19,7 +20,7 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class ProductForm {
   @Input() title: string = '';
-  @Input() product: any;
+  @Input() product!: Product;
 
   @Output() eventEmitter = new EventEmitter();
   errors: any[] = [];

@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ErrorHandlerService } from './error-handler.service';
 import { catchError } from 'rxjs';
+import { Product } from '../interface/Product';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +27,9 @@ export class ProductService {
       .pipe(catchError(this.errorHandler.handleError));
   }
 
-  updateProduct(product: any)
+  updateProduct(product: Product, id: number)
   {
-    let url = this.baseUrl + "/";
+    let url = this.baseUrl + "/" + id;
 
     return this.http.put<any>(url, product, this.httpOptions)
       .pipe(catchError(this.errorHandler.handleError));

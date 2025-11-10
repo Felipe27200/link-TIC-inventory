@@ -10,6 +10,7 @@ import { CommonResponseService } from '../../services/common-response.service';
 import { MessageService } from 'primeng/api';
 import { ProductForm } from '../product-form/product-form';
 import { ProductService } from '../../services/product.service';
+import { Product } from '../../interface/Product';
 
 @Component({
   selector: 'app-product-update',
@@ -31,7 +32,7 @@ export class ProductUpdate {
   private router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute)
 
-  product!: any;
+  product!: Product;
   notFound!: any;
 
   ngOnInit(): void {
@@ -46,7 +47,14 @@ export class ProductUpdate {
       this.productService.findById(id)
         .subscribe({
           next: (response) => {
-            this.product = response.data;
+            let data = response.data;
+
+            this.product = {
+              id: data.id,
+              name: data.attributes.name,
+              description: data.attributes.description,
+              price: data.attributes.price
+            };
           },
           error: (error) => {
             this.notFound = error.error;
@@ -55,11 +63,11 @@ export class ProductUpdate {
     }
   }
 
-  onSubmit(formData: any)
+  onSubmit(formData: Product)
   {
-    console.dir(formData);
+    let id = this.product.id ? this.product.id : -1;
 
-    this.productService.updateProduct(formData)
+    this.productService.updateProduct(formData, id)
       .subscribe({
         next: (response: any) => {
           console.log(response);
