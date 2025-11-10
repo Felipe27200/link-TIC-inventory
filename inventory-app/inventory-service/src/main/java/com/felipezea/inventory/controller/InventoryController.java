@@ -47,11 +47,11 @@ public class InventoryController
         return ResponseEntity.ok(inventory);
     }
 
-    @GetMapping("/")
-    public ProductApiResponse<ProductDTO> test()
+    @GetMapping("/product/{productFK}")
+    public ResponseEntity<InventoryApiResponse<InventoryDTO>> findByProductFK(@PathVariable Long productFK)
     {
-        var product = this.productClient.findProductById(1L);
+        var inventory = this.inventoryService.findInventoryByProductFk(productFK);
 
-        return product;
+        return ResponseEntity.ok(inventory);
     }
 }

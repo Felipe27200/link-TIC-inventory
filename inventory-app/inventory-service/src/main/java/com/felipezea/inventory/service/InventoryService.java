@@ -122,4 +122,30 @@ public class InventoryService
 
         return purchase;
     }
+
+    public InventoryApiResponse<InventoryDTO> findInventoryByProductFk(Long productFK)
+    {
+        var product = this.productClient.findProductById(productFK);
+
+        log.info("[findInventoryByProductFk] product with id found: {}", product);
+
+        var inventory = this.findEntityByProductFK(productFK);
+
+        return new InventoryApiResponse<>(
+                inventory.getId(),
+                this.modelMapper.map(inventory, InventoryDTO.class),
+                product
+        );
+    }
+
+    private Inventory findEntityByProductFK(Long productFK)
+    {
+        return this.inventoryRepository
+                .findInventoryByProductFK(productFK)
+                .orElseThrow(() -> {
+                    log.error("[purchase] inventory for the product id not found: {}", productFK);
+
+                    return new EntityNotFoundException("Inventory not found for the product id " + productFK);
+                });
+    }
 }
