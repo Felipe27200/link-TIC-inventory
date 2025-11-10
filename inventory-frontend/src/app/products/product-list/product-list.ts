@@ -120,7 +120,7 @@ export class ProductList implements OnInit {
     this.productService.deleteById(product.id)
       .subscribe({
         next: (response) => {
-          this.messageService.add({ severity: 'info', summary: 'Deleted', detail: response.body });
+          this.messageService.add({ severity: 'info', summary: 'Deleted', detail: response.message });
           this.ngOnInit();
         },
         error: (error) => {

@@ -57,7 +57,7 @@ export class ProductUpdate {
             };
           },
           error: (error) => {
-            this.notFound = error.error;
+            this.messageService.addAll(this.commonResponseService.setToastErrorMessage(error));
           }
         });
     }
