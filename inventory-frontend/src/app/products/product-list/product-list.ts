@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { Card } from 'primeng/card';
@@ -7,9 +8,9 @@ import { Toast } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { InputText } from 'primeng/inputtext';
 import { Button, ButtonDirective } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -20,11 +21,13 @@ import { CommonResponseService } from '../../services/common-response.service';
   selector: 'app-product-list',
   imports: [
     CommonModule,
+    FormsModule,
     Card,
     Toast,
     TableModule,
     IconFieldModule,
     InputIconModule,
+    InputNumberModule,
     Button,
     ConfirmDialogModule,
     RouterLink,
@@ -89,14 +92,13 @@ export class ProductList implements OnInit {
     }
   }
 
-  changeSize(size: number = 10)
+  changeSize()
   {
-    this.getProducts(0, size);
+    this.getProducts(0, this.size);
   }
 
-  dialogDelete(product: any, event: Event) {
-    console.log(product);
-
+  dialogDelete(product: any, event: Event) 
+  {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: `Do you want to delete ${product.attributes.name}?`,

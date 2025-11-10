@@ -12,6 +12,12 @@
         <div class="p-4">
             <h2 class="text-xl font-semibold mb-4">Products</h2>
 
+            <div class="flex items-center gap-3 mb-3">
+                <label class="text-sm text-gray-400">Items per page:</label>
+
+                 <p-inputnumber [(ngModel)]="size" inputId="locale-user" size="small" [min]="1" (onInput)="changeSize()"/>
+            </div>
+
             <div class="overflow-x-auto border rounded-lg">
                 <table class="min-w-full text-sm">
                     <thead class="border-b text-left">
