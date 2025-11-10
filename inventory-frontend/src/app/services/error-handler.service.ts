@@ -19,7 +19,7 @@ export class ErrorHandlerService {
 
       if (error.hasOwnProperty('error')
         && (error.error !== null && error.error !== undefined)
-        && error.error.hasOwnProperty('message')) {
+      ) {
         errorMessage += error.error.message;
       }
       else

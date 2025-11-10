@@ -7,7 +7,7 @@ export class CommonResponseService {
 
   constructor() { }
 
-    setToastErrorMessage(error: any)
+  setToastErrorMessage(error: any)
   {
     console.log(error);
     let listErrors = [];
@@ -25,7 +25,7 @@ export class CommonResponseService {
       && Array.isArray(error.error.errors)
     ) {
       error.error.errors.forEach((element: any) => {
-        listErrors.push({ severity: 'error', summary: 'Error!', detail: element });
+        listErrors.push({ severity: 'error', summary: 'Error!', detail: element.detail });
       });
     }
 
