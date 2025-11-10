@@ -1,7 +1,7 @@
-package com.felipezea.product.handler;
+package com.felipezea.inventory.handler;
 
-import com.felipezea.exception.EntityDuplicateException;
-import com.felipezea.exception.EntityNotFoundException;
+import exception.EntityDuplicateException;
+import exception.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
@@ -119,7 +119,7 @@ public class GlobalExceptionHandler
     {
         final Map<String, Object> error = createSingleError(
                 "500",
-                "Bad Request",
+                "Fatal Error",
                 ex.getMessage().isBlank() ? "Something wrong happened" : ex.getMessage()
         );
         log.error("[Exception] exception: {}", ex.getMessage(), ex);

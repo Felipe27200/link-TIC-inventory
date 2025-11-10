@@ -2,16 +2,12 @@ package com.felipezea.inventory.configuration;
 
 import com.felipezea.inventory.client.handler.ProductClientErrorDecoder;
 import feign.codec.ErrorDecoder;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class AppConfig
+public class ProductFeignConfig
 {
     @Bean
-    public ModelMapper modelMapper()
-    {
-        return new ModelMapper();
+    public ErrorDecoder errorDecoder() {
+        return new ProductClientErrorDecoder();
     }
 }
