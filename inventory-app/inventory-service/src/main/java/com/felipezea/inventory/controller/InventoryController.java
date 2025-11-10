@@ -31,6 +31,14 @@ public class InventoryController
         return ResponseEntity.ok(inventory);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<InventoryApiResponse<InventoryDTO>> updateInventory(@Valid @RequestBody CreateInventoryDTO createInventoryDTO)
+    {
+        var inventory = this.inventoryService.updateInventory(createInventoryDTO);
+
+        return ResponseEntity.ok(inventory);
+    }
+
     @PostMapping("/purchase")
     public ResponseEntity<Map<String, Object>> purchase(@Valid @RequestBody PurchaseDTO purchaseDTO)
     {

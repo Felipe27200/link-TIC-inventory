@@ -44,6 +44,37 @@ public class InventoryService
 
         inventory = this.inventoryRepository.save(inventory);
 
+        log.info("[createInventory] inventory created: {}", inventory);
+
+        return new InventoryApiResponse<>(
+                inventory.getId(),
+                this.modelMapper.map(inventory, InventoryDTO.class),
+                product
+        );
+    }
+
+    public InventoryApiResponse<InventoryDTO> updateInventory(CreateInventoryDTO createInventoryDTO)
+    {
+        log.debug("[updateInventory] Update Inventory Request");
+
+        var inventory = this.modelMapper.map(createInventoryDTO, Inventory.class);
+        inventory.setProductFK(createInventoryDTO.getProductFK());
+
+        var product = this.productClient.findProductById(inventory.getProductFK());
+
+        log.info("[updateInventory] product with id found: {}", product);
+
+        var oldInventory = this.inventoryRepository.findInventoryByProductFK(inventory.getProductFK())
+                .orElseThrow(() -> {
+                    return new EntityNotFoundException("Product does not have an inventory");
+                });
+
+        oldInventory.setQuantity(createInventoryDTO.getQuantity());
+
+        inventory = this.inventoryRepository.save(oldInventory);
+
+        log.info("[updateInventory] inventory updated: {}", inventory);
+
         return new InventoryApiResponse<>(
                 inventory.getId(),
                 this.modelMapper.map(inventory, InventoryDTO.class),
