@@ -34,8 +34,8 @@ export class ProductService {
       .pipe(catchError(this.errorHandler.handleError));
   }
 
-  findAll() {
-    let url = `${this.baseUrl}/`;
+  findAll(page: number = 0, size: number = 10) {
+    let url = `${this.baseUrl}/?page=${page}&size=${size}`;
 
     return this.http.get<any>(url, this.httpOptions)
       .pipe(

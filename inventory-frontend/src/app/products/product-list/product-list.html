@@ -1,0 +1,61 @@
+<div class="flex justify-center">
+    <p-toast />
+    <p-confirmDialog />
+
+    <div class="flex mt-4">
+        <p class="font-bold text-2xl"><span class="font-bold text-2xl pi pi-list mr-1"></span>Products</p>
+    </div>
+</div>
+
+<div class="flex justify-center mt-4">
+    <p-card>
+        <div class="p-4">
+            <h2 class="text-xl font-semibold mb-4">Products</h2>
+
+            <div class="overflow-x-auto border rounded-lg">
+                <table class="min-w-full text-sm">
+                    <thead class="border-b text-left">
+                        <tr>
+                            <th class="px-4 py-2 font-medium">Name</th>
+                            <th class="px-4 py-2 font-medium">Price</th>
+                            <th class="px-4 py-2 font-medium">Description</th>
+                            <th class="px-4 py-2 font-medium text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of products" class="border-b hover:bg-gray-700">
+                            <td class="px-4 py-2">{{ item.data.attributes.name }}</td>
+                            <td class="px-4 py-2">{{ item.data.attributes.price | currency:'COP':'symbol-narrow' }}</td>
+                            <td class="px-4 py-2">{{ item.data.attributes.description }}</td>
+
+                            <td class="px-4 py-2 text-center">
+                                <p-button icon="pi pi-file-edit" severity="info" [routerLink]="'/products/' +  item.data.id"
+                                    styleClass="h-7 !w-9 !mr-1 !mb-1" size="small" />
+                                
+                                <p-button severity="danger" styleClass="h-7 !w-9 !mr-1 !mb-1" icon="pi pi-trash" size="small"
+                                (onClick)="dialogDelete(item.data, $event)" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-between items-center mt-4">
+                <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-40" (click)="prevPage()"
+                    [disabled]="page === 0">
+                    Previous
+                </button>
+
+                <span class="text-sm text-gray-600">
+                    Page {{ page + 1 }} of {{ totalPages }}
+                </span>
+
+                <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-40" (click)="nextPage()"
+                    [disabled]="(page + 1) * size >= totalElements">
+                    Next
+                </button>
+            </div>
+        </div>
+    </p-card>
+</div>

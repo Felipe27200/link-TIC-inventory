@@ -24,7 +24,8 @@ export const apiKeyInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next
 
   if (headerName && headerValue) {
     const clonedRequest = req.clone({
-      headers: req.headers.set(headerName, headerValue)
+      headers: req.headers.set(headerName, headerValue),
+      withCredentials: false,
     });
 
     return next(clonedRequest);

@@ -1,0 +1,24 @@
+@if (notFound !== null && notFound !== undefined && notFound.hasOwnProperty('status')) 
+{
+    <div class="flex justify-center mt-7">
+        <p-card class="flex align-center mb-2" styleClass="bg-red-200">
+            <ng-template pTemplate="header">
+                <p class="ml-4 mt-4 text-lg font-bold text-red-900">
+                    <span class="font-bold text-lg pi pi-exclamation-circle mr-1"></span>
+                    Product Not Found!
+                </p>
+            </ng-template>
+            <p class="mt-0 pt-0 text-red-800 text-base">
+                {{ notFound.message }}
+            </p>
+        </p-card>
+    </div>
+}
+
+<app-product-form
+    titulo="Update"
+    [product]="product"
+    (eventEmitter)="onSubmit($event)"
+></app-product-form>
+
+<p-toast></p-toast>

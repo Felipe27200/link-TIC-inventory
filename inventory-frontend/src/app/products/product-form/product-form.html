@@ -1,0 +1,56 @@
+<div class="flex justify-center mt-7">
+    <div class="md:w-3/4 lg:w-2/6">
+      <p-card>
+        <ng-template pTemplate="header">
+          <div class="flex justify-center">
+            <div class="flex mt-2">
+                <p class="font-bold text-2xl">
+                  <span class="font-bold text-2xl pi pi-file-edit mr-1"></span> 
+                  {{ title }} Product
+                </p>
+            </div>
+          </div>     
+        </ng-template>
+        
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="field">
+                <label for="name">name:</label>
+                <input pInputText id="name" formControlName="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full mb-4">
+            </div>
+
+            <div class="field">
+                <label for="description">description:</label>
+                <input pInputText id="description" formControlName="description" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full mb-4">
+            </div>
+
+            <div class="field">
+                <label for="price">price:</label>
+                <input pInputText id="price" formControlName="price" type="number" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full mb-4">
+            </div>
+
+            @for (error of errors; track error) {
+              <p class="text-sm text-red-500 font-semibold">* {{ error }}</p>
+            }
+    
+            <p-button 
+              type="submit" 
+              label="{{ title }} Product" 
+              styleClass="w-full mb-2 mt-7"
+              [icon]=""
+              [disabled]="!productForm.valid"
+              size="small"
+            ></p-button>
+            <p-button 
+              type="button" 
+              label="Go back" 
+              severity="secondary"
+              styleClass="w-full" 
+              icon="pi pi-chevron-left"
+              routerLink="/products/"
+              size="small"
+            >
+          </p-button>
+        </form>
+      </p-card>
+    </div>
+  </div>
