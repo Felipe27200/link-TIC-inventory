@@ -7,10 +7,13 @@ import com.felipezea.inventory.client.ProductClient;
 import com.felipezea.inventory.service.InventoryService;
 import dto.CreateInventoryDTO;
 import dto.InventoryDTO;
+import dto.PurchaseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -24,6 +27,14 @@ public class InventoryController
     public ResponseEntity<InventoryApiResponse<InventoryDTO>> createInventory(@Valid @RequestBody CreateInventoryDTO createInventoryDTO)
     {
         var inventory = this.inventoryService.createInventory(createInventoryDTO);
+
+        return ResponseEntity.ok(inventory);
+    }
+
+    @PostMapping("/purchase")
+    public ResponseEntity<Map<String, Object>> purchase(@Valid @RequestBody PurchaseDTO purchaseDTO)
+    {
+        var inventory = this.inventoryService.purchase(purchaseDTO);
 
         return ResponseEntity.ok(inventory);
     }

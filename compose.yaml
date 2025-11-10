@@ -61,6 +61,31 @@ services:
 
     networks:
       - link-tic-network
+        
+  inventory-app:
+    build:
+      context: ./inventory-app
+      dockerfile: Dockerfile
+    depends_on:
+      inventory-db:
+        # The inventory-app container waits until that is true before starting.
+        condition: service_healthy
+    ports:
+      - 8082:8082
+    environment:
+      DATASOURCE_URL: jdbc:mysql://inventory-db:3306/inventory?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DATASOURCE_USER: root
+      DATASOURCE_PASSWORD: root123
+      HEADER_NAME: X-API-KEY
+      API_TOKEN: 1234
+      
+      # Product Client
+      PRODUCT_SERVICE_URL: http://product-app:8081
+      PRODUCT_HEADER_NAME: X-API-KEY
+      PRODUCT_API_TOKEN: 1234
+
+    networks:
+      - link-tic-network
 
 volumes:
   product-mysql-data:
