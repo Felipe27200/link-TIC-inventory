@@ -20,6 +20,27 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      
+  inventory-db:
+    image: mysql:8.0
+    ports:
+      - 3309:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: inventory # Database name
+    # Setting the volume
+    volumes:
+      - inventory-mysql-data:/var/lib/mysql
+    networks:
+      - link-tic-network
+
+    # The healthcheck runs mysqladmin ping every 10 seconds.
+    # When MySQL replies “mysqld is alive,” it is considered healthy
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-p=root123" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   product-app:
     build:
@@ -43,6 +64,7 @@ services:
 
 volumes:
   product-mysql-data:
+  inventory-mysql-data:
 
 networks:
   link-tic-network:

@@ -1,8 +1,11 @@
 package com.felipezea.api;
 
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor
 public class ProductApiPageResponse<T>
 {
     private List<ProductApiResponse<T>> data;
