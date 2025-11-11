@@ -42,7 +42,10 @@
                                 (onClick)="dialogDelete(item.data, $event)" />
 
                                 <p-button severity="success" styleClass="h-7 !w-9 !mr-1 !mb-1" icon="pi pi-plus" size="small"
-                                [routerLink]="'/inventory/' +  item.data.id" />
+                                [routerLink]="'/inventory/' +  item.data.id" title="Inventory" />
+
+                                <p-button severity="secondary" styleClass="h-7 !w-9 !mr-1 !mb-1" icon="pi pi-cart-plus" size="small"
+                                [routerLink]="'/inventory/purchase/' +  item.data.id" title="Purchase" />
                             </td>
                         </tr>
                     </tbody>

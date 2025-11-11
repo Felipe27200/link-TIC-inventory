@@ -48,8 +48,6 @@ export class InventoryCreate implements OnInit {
   }
 
   onSubmit(formData: any) {
-    console.log(formData)
-
     if (formData.update)
     {
       this.inventoryService.updateInventory(formData.formData)

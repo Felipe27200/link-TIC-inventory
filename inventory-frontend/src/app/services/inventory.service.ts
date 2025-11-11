@@ -42,4 +42,12 @@ export class InventoryService {
         catchError(this.errorHandler.handleError)
       );
   }
+
+  purchase(formData: any)
+  {
+    let url = this.baseUrl + "/purchase";
+
+    return this.http.post<any>(url, formData, this.httpOptions)
+      .pipe(catchError(this.errorHandler.handleError));
+  }
 }

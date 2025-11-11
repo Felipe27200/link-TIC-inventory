@@ -1,0 +1,64 @@
+<div class="flex justify-center mt-7">
+    <div class="md:w-3/4 lg:w-2/6">
+      <p-card>
+        <ng-template pTemplate="header">
+          <div class="flex justify-center">
+            <div class="flex mt-2">
+                <p class="font-bold text-2xl">
+                  <span class="font-bold text-2xl pi pi-file-edit mr-1"></span> 
+                  Purchase
+                </p>
+            </div>
+          </div>     
+        </ng-template>
+        
+        <form [formGroup]="purchaseForm" (ngSubmit)="onSubmit()">
+            <div class="field">
+                <label for="quantity">Product:</label>
+                <p class="font-bold mb-4"> 
+                  {{ product?.name }}
+                </p>
+
+                <label for="quantity">Price:</label>
+                <p class="font-bold mb-4"> 
+                  {{ product?.price | currency:'COP':'symbol-narrow' }}
+                </p>
+
+                <label for="quantity">Stock:</label>
+                <p class="font-bold mb-4"> 
+                  {{ currentStock }}
+                </p>
+
+
+                <label for="quantity">Quantity:</label>
+                <input pInputText id="quantity" formControlName="quantity" type="number" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full mb-4">
+            </div>
+
+            @for (error of errors; track error) {
+              <p class="text-sm text-red-500 font-semibold">* {{ error }}</p>
+            }
+    
+            <p-button 
+              type="submit" 
+              label="Purchase" 
+              styleClass="w-full mb-2 mt-7"
+              [icon]=""
+              [disabled]="(!this.purchaseForm.valid || (this.product == undefined || this.inventory == undefined))"
+              size="small"
+            ></p-button>
+            <p-button 
+              type="button" 
+              label="Go back" 
+              severity="secondary"
+              styleClass="w-full" 
+              icon="pi pi-chevron-left"
+              routerLink="/products/"
+              size="small"
+            >
+          </p-button>
+        </form>
+      </p-card>
+    </div>
+  </div>
+
+  <p-toast></p-toast>
