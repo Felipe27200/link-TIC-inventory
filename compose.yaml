@@ -87,6 +87,19 @@ services:
     networks:
       - link-tic-network
 
+  frontend:
+    build: ./inventory-frontend # Path to the angular project
+    ports:
+      - 4200:80
+    # This ensures the frontend container starts
+    # after the backend container starts
+    depends_on:
+      - inventory-app
+      - product-app
+    restart: unless-stopped
+    networks:
+      - link-tic-network
+
 volumes:
   product-mysql-data:
   inventory-mysql-data:
