@@ -40,6 +40,9 @@
                                 
                                 <p-button severity="danger" styleClass="h-7 !w-9 !mr-1 !mb-1" icon="pi pi-trash" size="small"
                                 (onClick)="dialogDelete(item.data, $event)" />
+
+                                <p-button severity="success" styleClass="h-7 !w-9 !mr-1 !mb-1" icon="pi pi-plus" size="small"
+                                [routerLink]="'/inventory/' +  item.data.id" />
                             </td>
                         </tr>
                     </tbody>
